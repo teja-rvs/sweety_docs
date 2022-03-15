@@ -10,7 +10,7 @@ class Reading < ApplicationRecord
 
   validates :data, presence: true, numericality: { only_integer: true }
   validates :recorded_at, presence: true
-  validate :daily_limit?
+  validate :daily_limit?, on: :create
 
   def daily_limit?
     errors.add(:daily_limit, 'Daily Limit Reached') if user.readings.today.size > (DAILY_LIMIT - 1)
@@ -28,7 +28,7 @@ class Reading < ApplicationRecord
         record = Reading.new
         record.user_id = 1
         record.data = rand(140..170)
-        record.recorded_at = "#{day} #{rand(0..24)}:00".to_datetime
+        record.recorded_at = "#{day} #{rand(6..18)}:00".to_datetime.localtime
         record.save!
       end
     end

@@ -58,4 +58,9 @@
         </table>
     </div>
 </div>
-<%= javascript_pack_tag 'reports' %>
+<script>
+    window.$('#reports-table').DataTable({
+        searching: false,
+        order: [[0, "desc"], [1, "desc"]]
+    });
+</script>

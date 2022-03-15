@@ -16,5 +16,91 @@
   <div class="btn btn-outline-primary mt-5" id="add-reading">Add Reading</div>
   <div class="btn btn-outline-primary mt-5" id="save-readings" type="submit" value="Submit">Save Readings</button>
 </form>
+<script>
+  $("#add-reading").on('click', function(){
+      add_new_reading();
+  });
 
-<%= javascript_pack_tag 'daily_readings' %>
+  $(document).on('click', '.delete-reading', function () {
+      var id = parseInt($(this).attr('id'))
+      $("#reading_details_" + id).remove();
+      var count = parseInt($('#readings-count').val() - 1);
+      set_count(count);
+  });
+
+  $("#save-readings").on('click', function(event){
+      event.preventDefault();
+      remove_error_messages();
+      submit_form();
+  });
+
+  function set_count(count) {
+      $('input[name="count"]').val(count);
+  }
+
+  function add_new_reading() {
+      var count = parseInt($('#readings-count').val());
+      if (count > 3) {
+          alert("You can add only 4 readings per day!!!");
+      }
+      else {
+          add_new_reading_form();
+          set_count(count + 1);
+      }
+  }
+
+  function add_new_reading_form() {
+      $.ajax({
+          url: '/readings/new',
+          type: 'GET',
+          dataType: 'html',
+          success: function (res) {
+              $('#new-readings').append(res);
+          }
+      });
+  }
+
+  function remove_error_messages() {
+      $('small').empty();
+  }
+
+  function submit_form() {
+      var form_data = get_form_data();
+      $.ajax({
+          type: 'POST',
+          url: '/readings/save_daily_readings',
+          data: form_data,
+          success: function (response) {
+              console.log('Readings saved successfully')
+          },
+          error: function (request, status, error) {
+              var errors = request.responseJSON;
+              add_error_messages(errors);
+          }
+      });
+  }
+
+  function add_error_messages(errors) {
+      check_daily_limit_error(errors);
+      $.each(errors, function (id, reading) {
+          $.each(reading, function (key, error) {
+              $("#" + key + "_error_" + id).append(error);
+          });
+      });
+  }
+
+  function check_daily_limit_error(errors) {
+      if (errors['daily_limit']) {
+          alert("You can add only 4 readings per day!!!");
+      }
+      delete errors['daily_limit'];
+  }
+
+  function get_form_data() {
+      var form_data = {};
+      $.each($('#daily-readings').serializeArray(), function (_, kv) {
+          form_data[kv.name] = kv.value;
+      });
+      return form_data;
+  }
+</script>
