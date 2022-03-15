@@ -1,5 +1,3 @@
-$(document).ready( function () {
-    window.$('#reports-table').DataTable({
-        searching: false
-    });
+window.$('#reports-table').DataTable({
+    searching: false
 });
