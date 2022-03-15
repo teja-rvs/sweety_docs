@@ -1,4 +1,4 @@
-$(document).on('click', '#add-reading', function () {
+$("#add-reading").on('click', function(){
     add_new_reading();
 });
 
@@ -7,7 +7,13 @@ $(document).on('click', '.delete-reading', function () {
     $("#reading_details_" + id).remove();
     var count = parseInt($('#readings-count').val() - 1);
     set_count(count);
-})
+});
+
+$("#save-readings").on('click', function(event){
+    event.preventDefault();
+    remove_error_messages();
+    submit_form();
+});
 
 function set_count(count) {
     $('input[name="count"]').val(count);
@@ -34,12 +40,6 @@ function add_new_reading_form() {
         }
     });
 }
-
-$(document).on('click', '#save-readings', function (event) {
-    event.preventDefault();
-    remove_error_messages();
-    submit_form();
-});
 
 function remove_error_messages() {
     $('small').empty();
