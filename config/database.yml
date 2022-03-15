@@ -54,6 +54,8 @@ test:
 #
 production:
   <<: *default
-  database: sweety_docs_production
-  username: sweety_docs
-  password: <%= ENV['SWEETY_DOCS_DATABASE_PASSWORD'] %>
+  host: sql6.freemysqlhosting.net
+  database: sql6479154
+  username: sql6479154
+  password: ms2ef4k8tA
+  port: 3306
