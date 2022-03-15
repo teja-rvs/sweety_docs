@@ -1,0 +1,31 @@
+<div class="login-container">
+
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: 'login-form'}) do |f| %>
+    <h2>SIGN UP</h2>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'box', placeholder: "Email" %>
+    <%- if resource.errors[:email].present? %>
+      <div class="error-message"><%= resource.errors[:email].first %></div>
+    <% end %>
+
+    <%= f.password_field :password, autocomplete: "new-password", class: 'box', placeholder: "Password (#{@minimum_password_length} characters minimum)" %>
+    <%- if resource.errors[:password].present? %>
+      <div class="error-message"><%= resource.errors[:password].first %></div>
+    <% end %>
+
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'box', placeholder: 'Confirm Password' %>
+    <%- if resource.errors[:password_confirmation].present? %>
+      <div class="error-message"><%= resource.errors[:password_confirmation].first %></div>
+    <% end %>
+
+    <div class="actions">
+      <%= f.submit "Sign up", class: 'login-btn' %>
+    </div>
+    
+    <%= render "devise/shared/links" %>
+    
+  <% end %>
+  <div class="right-side">
+    <%= image_tag("https://cdn2.vectorstock.com/i/1000x1000/38/31/blood-sugar-test-with-glucometer-glucose-vector-38743831.jpg") %>
+  </div>
+
+</div>

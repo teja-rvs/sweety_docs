@@ -1,0 +1,20 @@
+<div class="d-flex flex-column mt-5 p-1">
+  <div class="h2 text-center">Welcome <%= username %></div>
+  <div class="d-flex flex-row justify-content-around">
+      <%= link_to 'Reports', reports_user_path(id: @user.id, report_id: 1), class: 'btn btn-primary' %>
+    
+  </div>
+</div>
+
+<form class="form-inline" id="daily-readings">
+  <input type="hidden" id="readings-count" name="count" value="<%= @readings.count %>">
+  <div id="new-readings">
+    <% @readings.each do |reading| %>
+      <%= render 'daily_form', reading: reading %>
+    <% end %>
+  </div>
+  <div class="btn btn-outline-primary mt-5" id="add-reading">Add Reading</div>
+  <div class="btn btn-outline-primary mt-5" id="save-readings" type="submit" value="Submit">Save Readings</button>
+</form>
+
+<%= javascript_pack_tag 'daily_readings' %>

@@ -1,0 +1,27 @@
+<div class="login-container">
+
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'login-form'}) do |f| %>
+    <h2>SIGN IN</h2>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'box', placeholder: 'Email' %>
+
+    <%= f.password_field :password, autocomplete: "current-password", class: 'box', placeholder: 'Password' %>
+
+    <% if devise_mapping.rememberable? %>
+      <div class="field">
+        <%= f.check_box :remember_me %>
+        <%= f.label :remember_me %>
+      </div>
+    <% end %>
+
+    <div class="actions">
+      <%= f.submit "Log in", class: 'login-btn' %>
+    </div>
+    
+    <%= render "devise/shared/links" %>
+    
+  <% end %>
+  <div class="right-side">
+    <%= image_tag("https://cdn2.vectorstock.com/i/1000x1000/38/31/blood-sugar-test-with-glucometer-glucose-vector-38743831.jpg") %>
+  </div>
+
+</div>
