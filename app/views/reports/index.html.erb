@@ -6,10 +6,9 @@
         <%= link_to 'Add Daily Readings', readings_daily_path, class: 'btn btn-outline-primary' %>
         <%= link_to 'Daily Report', reports_user_path(id: @index_fecade.user.id, report_id: 1), class: 'btn btn-outline-primary' %>
         <%= link_to 'Monthly Report', reports_user_path(id: @index_fecade.user.id, report_id: 3), class: 'btn btn-outline-primary' %>
-            <%= form_with url: reports_user_path, method: :get, remote: true do |form| %>
+            <%= form_with url: reports_user_path(id: @index_fecade.user.id), method: :get, remote: true do |form| %>
                 <div class="d-flex flex-row">
                     <%= form.hidden_field :report_id, value: 2 %>
-                    <%= form.hidden_field :id, value: @index_fecade.user.id %>
                     <div class="row">
                         <div class="col">
                             <%= form.date_field :end_date, class: 'form-control', required: true, min: Date.today.at_beginning_of_month, max: Date.today, value: params[:end_date] %>

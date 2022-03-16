@@ -12,4 +12,9 @@ module SignUpHelper
       fill_in 'user[password_confirmation]', with: password_confirmation
     end
   end
+  
+  def email_tooltip_message
+    page.find('#user_email').native.attribute('validationMessage')
+  end
+
 end

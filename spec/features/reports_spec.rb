@@ -45,13 +45,13 @@ feature 'Reports' do
   scenario 'no data(month to date)' do
     visit_reports(user.id, :daily)
     add_month_to_date(Date.today)
-    check_empty(user.id, :month_to_date)
+    check_empty_content
   end
 
   scenario 'daily report' do
     data = populate_daily_readings(user)
     visit_reports(user.id, :daily)
-    check_report(user, data, today)
+    check_report(data, today)
   end
 
   scenario 'monthly report' do
@@ -59,7 +59,7 @@ feature 'Reports' do
     end_date = Date.today
     data = populate_monthly_readings(user, start_date, end_date)
     visit_reports(user.id, :monthly)
-    check_report(user, data, monthly)
+    check_report(data, monthly)
   end
 
   scenario 'month to date report' do
@@ -69,7 +69,7 @@ feature 'Reports' do
     visit_reports(user.id, :daily)
     add_month_to_date(end_date)
     scope = user.readings.month_to_date(end_date)
-    check_report(user, data, scope)
+    check_report(data, scope)
   end
 
 end

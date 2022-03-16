@@ -5,6 +5,10 @@ module ReportsHelper
 
   def check_empty(user_id, report)
     visit_reports(user_id, report)
+    check_empty_content
+  end
+
+  def check_empty_content
     expect(page).to have_content('No readings found')
     expect(page).to have_no_content('Minimum value')
     expect(page).to have_no_content('Maximum value')
@@ -14,7 +18,7 @@ module ReportsHelper
   def add_month_to_date(date)
     within('form') do
       fill_in 'end_date', with: date
-    end 
+    end
     click_button 'Month to date Report'
   end
 
@@ -57,17 +61,18 @@ module ReportsHelper
   end
 
 
-  def check_report(user, data, scope)
-
+  def check_report(data, scope)
+    
+    data_size = data.size
     data_min_value = data.min
     data_max_value = data.max
-    data_avg_value = (data.sum.to_f / data.size).round(2)
+    data_avg_value = (data.sum.to_f / data_size).round(2)
 
     # data consistency
-    expect(scope.count).to eq(data.size)
+    expect(scope.count).to eq(data_size)
     expect(scope.minimum(:data)).to eq(data_min_value)
     expect(scope.maximum(:data)).to eq(data_max_value)
-    expect((scope.sum(:data).to_f/scope.size).round(2)).to eq(data_avg_value)
+    expect((scope.sum(:data).to_f / scope.size).round(2)).to eq(data_avg_value)
   
     # UI consistency
     expect(min_value.text).to include(data_min_value.to_s)

@@ -39,20 +39,12 @@ feature 'Daily Readings create' do
   end
 
   scenario 'only integer readings are accepted' do
-    click_add_reading
-    id = page.find('.delete-reading')[:id]
-    add_reading(rand, id)
-    click_save_readings
-    message = get_error_message('data', id)
+    message = invalid_reading_details(rand)
     expect(message).to eq('must be an integer')
   end
 
   scenario 'reading cannot be blank' do
-    click_add_reading
-    id = page.find('.delete-reading')[:id]
-    add_reading(nil, id)
-    click_save_readings
-    message = get_error_message('data', id)
+    message = invalid_reading_details(nil)
     expect(message).to eq("can't be blank")
   end
 
@@ -61,7 +53,7 @@ feature 'Daily Readings create' do
     id = page.find('.delete-reading')[:id]
     add_recorded_at(nil, id)
     click_save_readings
-    message = get_error_message('recorded_at', id)
+    message = error_message('recorded_at', id)
     expect(message).to eq("can't be blank")
   end
 

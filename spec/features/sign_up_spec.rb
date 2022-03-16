@@ -11,14 +11,12 @@ feature 'Sign Up' do
 
   scenario 'invalid email (without @)' do
     sign_up('newuser', 'password', 'password')
-    message = page.find('#user_email').native.attribute('validationMessage')
-    expect(message).to eq "Please include an '@' in the email address. 'newuser' is missing an '@'."
+    expect(email_tooltip_message).to eq "Please include an '@' in the email address. 'newuser' is missing an '@'."
   end
 
   scenario 'invalid email (without anything after @)' do
     sign_up('newuser@', 'password', 'password')
-    message = page.find('#user_email').native.attribute('validationMessage')
-    expect(message).to eq "Please enter a part following '@'. 'newuser@' is incomplete."
+    expect(email_tooltip_message).to eq "Please enter a part following '@'. 'newuser@' is incomplete."
   end
 
   scenario 'existing email' do

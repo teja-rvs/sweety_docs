@@ -17,7 +17,7 @@ module DailyReadingsHelper
     fill_in "readings[#{id}][recorded_at]", with: recorded_at
   end
 
-  def get_error_message(attribute, id)
+  def error_message(attribute, id)
     find_by_id("#{attribute}_error_#{id}").text
   end
 
@@ -28,5 +28,13 @@ module DailyReadingsHelper
   def populate_reading(user)
     user.readings << Reading.new(data: 140, recorded_at: Time.now)
     user.save!
+  end
+
+  def invalid_reading_details(data)
+    click_add_reading
+    id = page.find('.delete-reading')[:id]
+    add_reading(data, id)
+    click_save_readings
+    error_message('data', id)
   end
 end
