@@ -1,14 +1,15 @@
-<% readings = @readings.to_a %>
+<% readings = @index_fecade.readings.to_a %>
 <% data_sum = 0 %>
 <div class="d-flex flex-column mt-5">
     <div class="h2 text-center p-2">Glucose Reports</div>
     <div class="d-flex flex-row justify-content-around">
         <%= link_to 'Add Daily Readings', readings_daily_path, class: 'btn btn-outline-primary' %>
-        <%= link_to 'Daily Report', reports_user_path(report_id: 1), class: 'btn btn-outline-primary' %>
-        <%= link_to 'Monthly Report', reports_user_path(report_id: 3), class: 'btn btn-outline-primary' %>
+        <%= link_to 'Daily Report', reports_user_path(id: @index_fecade.user.id, report_id: 1), class: 'btn btn-outline-primary' %>
+        <%= link_to 'Monthly Report', reports_user_path(id: @index_fecade.user.id, report_id: 3), class: 'btn btn-outline-primary' %>
             <%= form_with url: reports_user_path, method: :get, remote: true do |form| %>
                 <div class="d-flex flex-row">
                     <%= form.hidden_field :report_id, value: 2 %>
+                    <%= form.hidden_field :id, value: @index_fecade.user.id %>
                     <div class="row">
                         <div class="col">
                             <%= form.date_field :end_date, class: 'form-control', required: true, min: Date.today.at_beginning_of_month, max: Date.today, value: params[:end_date] %>
@@ -20,7 +21,7 @@
                 </div>
             <% end %>
     </div>
-    <div class="h3 text-center mt-5"><%= report_type[@report_type] %></div>
+    <div class="h3 text-center mt-5"><%= report_type[@index_fecade.report_type] %></div>
     
     <div class="table-responsive">
         <table class="table" id="reports-table">
@@ -33,7 +34,7 @@
             </thead>
             <tbody>
                 <%- if display_table(readings) %>
-                    <% @readings.each do |reading| %>
+                    <% @index_fecade.readings.each do |reading| %>
                         <tr>
                             <% data_sum = data_sum + reading.data %>
                             <% recorded_at = reading.recorded_at %>
