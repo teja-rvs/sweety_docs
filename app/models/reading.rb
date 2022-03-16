@@ -4,7 +4,8 @@ class Reading < ApplicationRecord
   scope :today, -> { where('recorded_at >= ?', DateTime.now.beginning_of_day) }
   scope :month_to_date, -> (end_date) { where('recorded_at >= ? AND recorded_at <= ?', DateTime.now.at_beginning_of_month.beginning_of_day, end_date.to_date.at_end_of_day) }
   scope :monthly, -> { where('recorded_at >= ?', DateTime.now.months_ago(1).beginning_of_day) }
-  scope :order_data_wise, -> { order(data: :asc) }
+  scope :order_by_data, -> { order(data: :asc) }
+  scope :order_by_time, -> { order(recorded_at: :asc) }
 
   belongs_to :user
 
@@ -16,10 +17,6 @@ class Reading < ApplicationRecord
     errors.add(:daily_limit, 'Daily Limit Reached') if user.readings.today.size > (DAILY_LIMIT - 1)
   end
 
-  def recorded_at_localtime
-    recorded_at.localtime
-  end
-
   def genereate_sample_data
     start_date = Date.parse('2022-1-1')
     end_date = Date.today
@@ -28,7 +25,7 @@ class Reading < ApplicationRecord
         record = Reading.new
         record.user_id = 1
         record.data = rand(140..170)
-        record.recorded_at = "#{day} #{rand(6..18)}:00".to_datetime.localtime
+        record.recorded_at = "#{day} #{rand(6..18)}:00"
         record.save!
       end
     end

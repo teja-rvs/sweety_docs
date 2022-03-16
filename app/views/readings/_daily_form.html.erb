@@ -6,7 +6,7 @@
         <small class="text-danger" id="data_error_<%= reading_id %>"></small>
     </div>
     <div class="col">
-        <input type="time" class="form-control" name="readings[<%= reading_id %>][recorded_at]" value="<%= get_hh_mm(reading.recorded_at_localtime) %>">
+        <input type="time" class="form-control" name="readings[<%= reading_id %>][recorded_at]" value="<%= get_hh_mm(reading.recorded_at) %>">
         <small class="text-danger" id="recorded_at_error_<%= reading_id %>"></small>
     </div>
     <div class="col">

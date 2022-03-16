@@ -24,9 +24,9 @@ class ReportsController < ApplicationController
 
   def set_readings(end_date)
     if @report_type == :month_to_date
-      @user.readings.public_send(@report_type, end_date).order_data_wise.strict_loading
+      @user.readings.public_send(@report_type, end_date).order_by_data.strict_loading
     else
-      @user.readings.public_send(@report_type).order_data_wise.strict_loading
+      @user.readings.public_send(@report_type).order_by_data.strict_loading
     end
   end
 end

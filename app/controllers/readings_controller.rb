@@ -9,7 +9,7 @@ class ReadingsController < ApplicationController
   end
 
   def daily
-    @readings = @user.readings.today
+    @readings = @user.readings.today.order_by_time
   end
 
   def save_daily_readings

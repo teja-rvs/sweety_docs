@@ -36,7 +36,7 @@
                     <% @readings.each do |reading| %>
                         <tr>
                             <% data_sum = data_sum + reading.data %>
-                            <% recorded_at = reading.recorded_at_localtime %>
+                            <% recorded_at = reading.recorded_at %>
                             <th><%= get_date(recorded_at) %></th>
                             <th><%= get_hh_mm(recorded_at) %></th>
                             <th><%= reading.data %></th>
@@ -50,8 +50,8 @@
             </tbody>
             <%- if display_table(readings) %>
                 <div class="d-flex flex-row justify-content-between p-5 caption">
-                    <div class="alert alert-primary">Minimum value: <%= readings.first.data %><%= readings.first.recorded_at_localtime.strftime(" on %B %d, %Y at %H:%M") %></div>
-                    <div class="alert alert-primary">Maximum value: <%= readings.last.data %><%= readings.last.recorded_at_localtime.strftime(" on %B %d, %Y at %H:%M") %></div>
+                    <div class="alert alert-primary">Minimum value: <%= readings.first.data %><%= readings.first.recorded_at.strftime(" on %B %d, %Y at %H:%M") %></div>
+                    <div class="alert alert-primary">Maximum value: <%= readings.last.data %><%= readings.last.recorded_at.strftime(" on %B %d, %Y at %H:%M") %></div>
                     <div class="alert alert-primary">Average value: <%= (data_sum.to_f / readings.size).round(2) %></div>
                 </div>
             <% end %>
